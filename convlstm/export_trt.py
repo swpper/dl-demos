@@ -20,18 +20,18 @@ model = ConvLSTMNet(
     n_pred=20
 ).eval()
 
-
+dummy_input = torch.randn(16, 5, 1, 32, 32)
 
 trt_model = trtpy.from_torch(
     model,
-    dummy_input=torch.randn(16, 5, 1, 32, 32),
+    dummy_input,
     max_batch_size=16,
     onnx_save_file="model.onnx",
     engine_save_file="engine.trtmodel",
 )
 
 t0 = time.time()
-trt_out = trt_model(torch.randn(16, 5, 1, 32, 32))
+trt_out = trt_model(dummy_input)
 t1 = time.time()
 print("Inference time:", t1 - t0, 's')
 print(trt_out.shape)
