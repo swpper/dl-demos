@@ -13,8 +13,8 @@ trtexec \
     --onnx=$ONNX_MODEL_PATH \
     --saveEngine=$ENGINE_PATH \
     --minShapes=encoder_input:1x5x1x32x32 \
-    --optShapes=input_0:16x5x1x32x32 \
-    --maxShapes=input_0:32x5x1x32x32 \
+    --optShapes=encoder_input:16x5x1x32x32 \
+    --maxShapes=encoder_input:32x5x1x32x32 \
     --workspace=1024 \
     --fp16 \
     --best \
