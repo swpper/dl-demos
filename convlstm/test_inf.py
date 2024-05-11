@@ -43,7 +43,7 @@ sess_ort = ort.InferenceSession(
 )
 input_name = sess_ort.get_inputs()[0].name
 output_name = sess_ort.get_outputs()[0].name
-# print(f'input_name: {input_name}, output_name: {output_name}')
+print(f'input_name: {input_name}, output_name: {output_name}')
 
 
 
@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
 
     # 创建输入数据
-    input_data = np.random.rand(batch_size, N_OBS, H, W, C).astype(np.float32)
+    input_data = torch.randn(batch_size, N_OBS, C, H, W, dtype=torch.float32)
 
     # 使用优化前的模型进行推理，并记录时间
     start_time = time.time()
@@ -72,8 +72,12 @@ if __name__ == '__main__':
     # print("Inference time with model after optimization: ", end_time - start_time, type(output_data_after_optimization))
     
     # 使用onnx模型进行推理，并记录时间
+    input_data = np.random.rand(batch_size, N_OBS, C, H, W).astype(np.float32)
     start_time = time.time()
     onnx_output = sess_ort.run([output_name], {input_name: input_data})[0]
     end_time = time.time()
     print("Inference time with onnx model: ", end_time - start_time, type(onnx_output))
+
+    s = output_data_before_optimization.detach().numpy() - onnx_output
+    print("Difference between torch and onnx model: ", s.sum())
 
