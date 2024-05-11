@@ -1,6 +1,9 @@
 #!/bin/bash
 # TensorRT推理脚本
 
+# 使用set -e让脚本在遇到错误时停止执行
+set -e
+
 ENGINE_PATH=engine.trt
 
 ONNX_MODEL_PATH=model.onnx
