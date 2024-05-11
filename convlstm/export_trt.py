@@ -25,6 +25,7 @@ dummy_input = torch.randn(16, 5, 1, 32, 32)
 trt_model = trtpy.from_torch(
     model,
     dummy_input,
+    opset=15,
     max_batch_size=16,
     onnx_save_file="model.onnx",
     engine_save_file="engine.trtmodel",
